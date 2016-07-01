@@ -49,29 +49,19 @@
 ##                     1.1 Installl and load packages                          ##
 #################################################################################
 
-# install packages
-install.packages("tourr")         
-install.packages("foreign")       
-install.packages("psych")         
-install.packages("ggplot2")       
-install.packages("reshape2" )      
-install.packages("scatterplot3d") 
-install.packages("stargazer")     
-install.packages("GPArotation")   
-install.packages("rworldmap")     
 
+# clear console
+rm(list=ls())
 
-# load packages
-library("tourr") 
-library("stats")
-library("foreign")
-library("psych")
-library("ggplot2")
-library("reshape2")
-library("scatterplot3d")
-library("stargazer")
-library("GPArotation")
-library("rworldmap")
+# install and load packages
+libraries = c("tourr", "stats","foreign", "psych", "ggplot2", "reshape2", 
+              "scatterplot3d", "stargazer", "GPArotation", "rworldmap")
+lapply(libraries, function(x) if (!(x %in% installed.packages())) {
+  install.packages(x)
+}
+)
+lapply(libraries, library, quietly = TRUE, character.only = TRUE)
+
 
 
 #################################################################################
@@ -142,6 +132,8 @@ fact_prom = fa(data,3,rotate="promax")      ;fact_prom
 
 # Pick one rotation (e.g. biquartimin) and check the loadings
 fvs = fact_biqu$Structure 
+fvs[abs(fvs)<0.5] = NA
+
 
 #------------------------Barplot with laodings---------------------------------#
 
@@ -226,6 +218,7 @@ text(cbind(seq(1:10),com.sort),
 # Factor analysis with 2 factors using varimax roation
 fact_varimax = fa(data,2,rotate="varimax");fact_varimax
 fvs = fact_varimax$Structure 
+fvs[abs(fvs)<0.5] = NA
 
 ## Visualization
 #------------------------Barplot with laodings---------------------------------#
@@ -233,8 +226,8 @@ fvs = fact_varimax$Structure
 par(mfrow=c(1 ,2)) 
 loadings1 = fact_varimax$loadings[,1]
 loadings2 = fact_varimax$loadings[,2]
-col1      = 1-as.numeric(is.na(fvs_varimax[,1]))
-col2      = 1-as.numeric(is.na(fvs_varimax[,2]))
+col1      = 1-as.numeric(is.na(fvs[,1]))
+col2      = 1-as.numeric(is.na(fvs[,2]))
 barplot(loadings1, horiz = T,main="Factor 1",col=col1*2)
 barplot(loadings2, horiz = T,main="Factor 2",col=col2*2)
 
@@ -264,7 +257,6 @@ abline(v=0.5, col=4) # corresponds to factor 1
 text(f_loadings,
      labels=row.names(order.loadings),
      cex=0.8, pos=4) 
-)
 
 
 ## Validation
