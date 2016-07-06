@@ -1,30 +1,3 @@
-# ------------------------------------------------------------------------------
-# Book: MVA - Applied Multivariate Statistical Analysis
-# ------------------------------------------------------------------------------
-# Quantlet: MVAfactplaces
-# ------------------------------------------------------------------------------
-# Description: Factor analysis of the Places data set from the package tourr.
-# Shows how to do applied factor analysis and visualization. Including selection
-# of the number of factors, estimation, rotation and visualization. Factor
-# Scores are also evaluated and plotted on a map.
-# ------------------------------------------------------------------------------
-# Usage: -
-# ------------------------------------------------------------------------------
-# Inputs: - 
-# ------------------------------------------------------------------------------
-# Output: Factor Analysis Results, Scree Plots and different other visualization
-# material of scores, communalities as well as a spatial representation of the
-# Factor Scores.
-# ------------------------------------------------------------------------------
-# Keywords: Factor Analysis, Factor Viszalization, Places Rated, Rotation,
-# Factor Scores
-# ------------------------------------------------------------------------------
-# See also: SMSfactanal, SMSfactuscrime, SMSfactushealth, MVAfactcarm,
-# MVAfacthous, SMSfactbank,SMSfactfood, SMSfacthletic	
-# ------------------------------------------------------------------------------
-# Author: Johannes Stoiber, Michael Lebacher 01/07/2016
-# ------------------------------------------------------------------------------
-
 #################################################################################
 ##                           Structure                                         ##
 #################################################################################
