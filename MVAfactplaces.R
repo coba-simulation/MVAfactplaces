@@ -192,7 +192,7 @@ text(cbind(seq(1:10),com.sort),
 fact = fa(data,1);fact
 # Information about factor loadings and communalities
 tab = cbind(fact$Structure, fact$communality)
-colnames(tab)<- c("MR1", "h2")
+colnames(tab) = c("MR1", "h2")
 
 fvs  = fact$Structure 
 fvs[abs(fvs)<0.5] = NA
@@ -217,7 +217,7 @@ h2.2       = fact$communality
 com.sort = sort(h2.2, decreasing = TRUE)
 total    = sum(com.sort)/9
 com.sort = c(com.sort, total)
-names(com.sort)[10] <- "total"
+names(com.sort)[10] = "total"
 plot(com.sort,
      main = "Communalities",
      xlim = c(0, 11),
