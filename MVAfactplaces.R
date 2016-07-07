@@ -184,57 +184,34 @@ text(cbind(seq(1:10),com.sort),
 
 
 #################################################################################
-##                    4   Repeat step 2 and 3 for 2 factors                    ##
+##                    4   Repeat step 2 and 3 for 1 factors                    ##
 #################################################################################
 
 ## Rotation and estimation
-# Factor analysis with 2 factors using varimax roation
-fact_varimax = fa(data,2,rotate="varimax");fact_varimax
-fvs = fact_varimax$Structure 
+# Factor analysis with 1 factors using varimax roation
+fact = fa(data,1);fact
+# Information about factor loadings and communalities
+tab = cbind(fact$Structure, fact$communality)
+colnames(tab)<- c("MR1", "h2")
+
+fvs  = fact$Structure 
 fvs[abs(fvs)<0.5] = NA
 
 ## Visualization
 #------------------------Barplot with laodings---------------------------------#
 # Plot the Factor Loadings with Barplots
-par(mfrow=c(1 ,2)) 
-loadings1 = fact_varimax$loadings[,1]
-loadings2 = fact_varimax$loadings[,2]
+loadings = fact$loadings[,1]
 col1      = 1-as.numeric(is.na(fvs[,1]))
-col2      = 1-as.numeric(is.na(fvs[,2]))
-barplot(loadings1, horiz = T,main="Factor 1",col=col1*2)
-barplot(loadings2, horiz = T,main="Factor 2",col=col2*2)
+barplot(loadings, horiz = T,main="Factor 1",col=col1*2)
 
 #-----------------------Directed graph scheme-----------------------------------#
 # Plot the Factor Loadings as a directed graph
-par(mfrow=c(1 ,1))
-fa.diagram(fact_varimax,cut=0.5)
-
-#-------------------------------2-D Plot----------------------------------------#
-# 2D plot visualizing factors and loadings
-f_loadings     = fact_varimax$loadings
-order.loadings = cbind(f_loadings[,1], f_loadings[,2])
-colnames(order.loadings) = c("MR1", "MR2")
-vec.col = c(1,2,4,1,1,4,4,2) # 1 loads on no factor, 4 on factor 1, 2 on factor 2
-plot(order.loadings,
-     main     = "2D factor loadings",
-     col      = vec.col,
-     lwd      = 2,
-     pch      = 16,
-     cex.lab  = 1,
-     cex.axis = 1,
-     xlab     = "MR 1", # corresponds to order.loadings[,1]
-     ylab     = "MR2"   # corresponds to order.loadings[,2]
-)
-abline(h=0.5, col=2) # corresponds to factor 2
-abline(v=0.5, col=4) # corresponds to factor 1
-text(f_loadings,
-     labels=row.names(order.loadings),
-     cex=0.8, pos=4) 
+fa.diagram(fact,cut=0.5)
 
 
 ## Validation
 # Communalities
-h2.2       = fact_varimax$communality
+h2.2       = fact$communality
 
 # sort communaliteis and show them in a plot, including total communality
 com.sort <- sort(h2.2, decreasing = TRUE)
@@ -244,7 +221,7 @@ names(com.sort)[10] <- "total"
 plot(com.sort,
      main = "Communalities",
      xlim = c(0, 11),
-     ylim = c(0.1, 1),
+     ylim = c(-0.1, 1),
      ylab = "explained variance",
      xaxt = "n",
      xlab = ''
@@ -262,13 +239,13 @@ text(cbind(seq(1:10),com.sort),
 newmap  = getMap(resolution = "low")                        
 
 ## extract the scores
-scores_varimax = factor.scores(x=data, f=fact_varimax)$scores # 2 factors
+score = factor.scores(x=data, f=fact)$scores 
 
 #--------------------------Scores factor 1--------------------------------------#
-par(mfrow=c(1,1))
-score_1 = scores_varimax[,1]                                 # Select the first Factor Score
+plot(score)                                                  # most betweeen -1 and 2
+score[score>2] = 2                                           # for illustration reasons
 rbPal   = colorRampPalette(c('yellow','red'))                # Coloring between yellow and red by intensity
-cols    = rbPal(100)[as.numeric(cut(score_1,breaks = 100))]
+cols    = rbPal(10)[as.numeric(cut(score_1,breaks = 10))]
 plot(newmap,
      xlim = c(-124, -65),
      ylim = c(27, 48.88),
@@ -278,21 +255,5 @@ plot(newmap,
 coord = cbind(places$long, places$lat)                       # load in longiture and latitude of the data
 coord = subset(coord, coord[,1]>-125)
 points(coord, asp=T,bg=cols,pch=21,lwd=2)                    # gives the points
-
-
-#--------------------------Scores factor 2--------------------------------------#
-score_2 = scores_varimax[,2]                                 # select the second Factor Score
-rbPal   = colorRampPalette(c('yellow','red'))                # Coloring between yellow and red by intensity
-cols    = rbPal(6)[as.numeric(cut(score_2,breaks = 6))]      # Coloring between yellow and red by intensity
-plot(newmap,
-     xlim = c(-124, -65),
-     ylim = c(27, 48.88),
-     asp  = 1,
-     main = "Geographic distribution of Factor Scores (II)"  # Plot north america
-)
-coord  = cbind(places$long, places$lat)                      # load in longiture and latitude of the data
-coord  = subset(coord, coord[,1]>-125)
-points(coord, asp=T,bg=cols,pch=21,lwd=2)                    # gives the points
-
 
 
