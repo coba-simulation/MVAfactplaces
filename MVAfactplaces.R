@@ -201,8 +201,8 @@ fvs[abs(fvs)<0.5] = NA
 #------------------------Barplot with laodings---------------------------------#
 # Plot the Factor Loadings with Barplots
 loadings = fact$loadings[,1]
-col1      = 1-as.numeric(is.na(fvs[,1]))
-barplot(loadings, horiz = T,main="Factor 1",col=col1*2)
+col      = 1-as.numeric(is.na(fvs[,1]))
+barplot(loadings, horiz = T,main="Factor 1",col=col*2)
 
 #-----------------------Directed graph scheme-----------------------------------#
 # Plot the Factor Loadings as a directed graph
@@ -214,9 +214,9 @@ fa.diagram(fact,cut=0.5)
 h2.2       = fact$communality
 
 # sort communaliteis and show them in a plot, including total communality
-com.sort <- sort(h2.2, decreasing = TRUE)
-total <- sum(com.sort)/9
-com.sort <- c(com.sort, total)
+com.sort = sort(h2.2, decreasing = TRUE)
+total    = sum(com.sort)/9
+com.sort = c(com.sort, total)
 names(com.sort)[10] <- "total"
 plot(com.sort,
      main = "Communalities",
