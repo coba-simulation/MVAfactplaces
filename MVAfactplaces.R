@@ -13,8 +13,8 @@
 ##  * 2.2 Visualization
 ##  * 3   Validation
 ##  * 3.1 Communalites
-##  * 4   Repeat steps 2 and 3 using 2 factors
-##  * 5   Spatial Visualization for 2 factors
+##  * 4   Repeat steps 2 and 3 using 1 factors
+##  * 5   Spatial Visualization for 1 factors
 #-------------------------------------------------------------------------------#
 
 #################################################################################
