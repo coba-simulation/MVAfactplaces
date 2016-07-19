@@ -188,7 +188,7 @@ text(cbind(seq(1:10),com.sort),
 #################################################################################
 
 ## Rotation and estimation
-# Factor analysis with 1 factors using varimax roation
+# Factor analysis with 1 factor 
 fact = fa(data,1);fact
 # Information about factor loadings and communalities
 tab = cbind(fact$Structure, fact$communality)
@@ -245,7 +245,7 @@ score = factor.scores(x=data, f=fact)$scores
 plot(score)                                                  # most betweeen -1 and 2
 score[score>2] = 2                                           # for illustration reasons
 rbPal   = colorRampPalette(c('yellow','red'))                # Coloring between yellow and red by intensity
-cols    = rbPal(10)[as.numeric(cut(score_1,breaks = 10))]
+cols    = rbPal(10)[as.numeric(cut(score,breaks = 10))]
 plot(newmap,
      xlim = c(-124, -65),
      ylim = c(27, 48.88),
